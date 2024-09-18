@@ -1,50 +1,6 @@
-# Welcome to your Expo app 👋
-
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
-
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+![WhatsApp Image 2024-09-18 at 6 05 15 PM (3)](https://github.com/user-attachments/assets/b2ab4622-4051-4137-8090-198d38f3d3ff)
+![WhatsApp Image 2024-09-18 at 6 05 16 PM](https://github.com/user-attachments/assets/1f0418ad-49e9-483a-a973-35b2bbe3a967)
+![WhatsApp Image 2024-09-18 at 6 05 14 PM](https://github.com/user-attachments/assets/534aeef7-0057-4efb-985a-359a4380c25b)
+![WhatsApp Image 2024-09-18 at 6 05 15 PM](https://github.com/user-attachments/assets/42ff041a-83ac-46dd-971f-028792e821db)
+![WhatsApp Image 2024-09-18 at 6 05 15 PM (1)](https://github.com/user-attachments/assets/82f81b90-4c09-428c-8e47-f373f1353688)
+![WhatsApp Image 2024-09-18 at 6 05 15 PM (2)](https://github.com/user-attachments/assets/223b709a-0118-404e-98e6-7525e10e5c86)

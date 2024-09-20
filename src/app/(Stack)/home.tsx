@@ -1,4 +1,11 @@
-import { View, Text, TextInput, FlatList, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  FlatList,
+  Pressable,
+  Modal,
+} from "react-native";
 import {
   CustomScreenWrapper,
   CustomPokemonCard,
@@ -20,6 +27,7 @@ export default function HomeScreen() {
     (state: any) => state.pokemon.filtered_pokemons
   );
   const typesData = useSelector((state: any) => state.pokemon.types);
+  const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
 
   const onPressPokemon = (id: number) => {
@@ -29,6 +37,7 @@ export default function HomeScreen() {
 
   const onPressType = (id: number) => {
     dispatch(type_selected(id));
+    setModalVisible(false);
   };
 
   const onPressClearFilter = () => {
@@ -57,7 +66,16 @@ export default function HomeScreen() {
   return (
     <CustomScreenWrapper className="bg-white">
       <View className="gap-2 px-1 mb-1">
-        <Text className="font-bold text-4xl">Pokédex</Text>
+        <View className="flex-row items-center justify-between active:opacity-20">
+          <Text className="font-bold text-4xl">Pokédex</Text>
+          <Pressable
+            className="bg-black/5 p-2 rounded-full"
+            onPress={() => setModalVisible(!modalVisible)}
+          >
+            <Icon name="filter" />
+          </Pressable>
+        </View>
+
         <View className="flex-row gap-3 bg-default-input h-16 items-center rounded-xl py-5 px-6">
           <Icon name="search" width={20} strokeWidth={1.5} />
           <TextInput
@@ -68,19 +86,11 @@ export default function HomeScreen() {
           />
         </View>
         <Pressable
-          className="active:opacity-20 justify-center items-center border rounded-xl"
+          className="bg-black p-2 rounded-full active:opacity-20"
           onPress={() => onPressClearFilter()}
         >
-          <Text>Clear Filter</Text>
+          <Text className="text-white font-extrabold text-center">Clear Filter</Text>
         </Pressable>
-        <FlatList
-          data={typesData}
-          renderItem={renderTypeItem}
-          keyExtractor={(item: PokemonType) => item.id.toString()}
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          contentContainerClassName="gap-2"
-        />
       </View>
 
       {search_pokemon_by_name.length === 0 ? (
@@ -96,6 +106,33 @@ export default function HomeScreen() {
           numColumns={2}
         />
       )}
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View className="flex-1 justify-center items-center bg-black/50">
+          <View className="bg-white rounded-3xl p-5 items-center w-[70%] gap-2">
+            <FlatList
+              data={typesData}
+              renderItem={renderTypeItem}
+              keyExtractor={(item: PokemonType) => item.id.toString()}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              contentContainerClassName="gap-3"
+              columnWrapperClassName="gap-10"
+              numColumns={3}
+            />
+            <Pressable
+              className="bg-black p-2 rounded-full active:opacity-20"
+              onPress={() => setModalVisible(false)}
+            >
+              <Text className="text-white font-extrabold">Close Filter</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </CustomScreenWrapper>
   );
 }

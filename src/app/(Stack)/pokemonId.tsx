@@ -1,7 +1,7 @@
 import { View, Text, Pressable } from "react-native";
 import { Image } from "expo-image";
 import { CustomScreenWrapper, CustomStat } from "@/src/components";
-import { router, useLocalSearchParams, Stack } from "expo-router";
+import { router } from "expo-router";
 import { getPokemonImage } from "@/src/services/pokemonsService";
 import {
   getBgType,
@@ -56,7 +56,7 @@ export default function PokemonScreen() {
       className={`${getBgPokemon(pokemon.type[0].toString().toLowerCase())}`}
     >
       <Pressable
-        className="bg-black/5 p-1 rounded-full w-10"
+        className="bg-black/5 p-1 rounded-full w-8"
         onPress={() => router.back()}
       >
         <Icon name="backArrow" width={24} strokeWidth={2} color="#000" />

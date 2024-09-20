@@ -68,14 +68,14 @@ export default function CustomPokemonCard({
             </Text>
 
             <View className="flex-row gap-2 items-center">
-              {pokemon.type.map((type: string, index: number) => (
+              {pokemon.type.map((type: any, index: number) => (
                 <View
                   key={index}
                   className={`flex-row gap-1 items-center p-1 rounded-md ${getBgType(
                     type.toLowerCase()
                   )}`}
                 >
-                  <Icon color="#fff" width={20} />
+                  <Icon name={type.toLowerCase()} color="#fff" width={20} />
                   <Text className="text-xs text-white">{type}</Text>
                 </View>
               ))}

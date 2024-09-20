@@ -1,6 +1,7 @@
 import React from "react";
 import ArrowLeft from "./ArrowLeft";
 import ArrowRight from "./ArrowRight";
+import Filter from "./Filter";
 import BackArrow from "./BackArrow";
 import Search from "./Search";
 import Pokeball from "./Pokeball";
@@ -26,6 +27,7 @@ import Water from "./Water";
 const icons = {
   arrowLeft: ArrowLeft,
   arrowRight: ArrowRight,
+  filter: Filter,
   backArrow: BackArrow,
   search: Search,
   pokeball: Pokeball,
@@ -50,50 +52,32 @@ const icons = {
 };
 
 type IconProps = {
-  name:
-    | "arrowLeft"
-    | "arrowRight"
-    | "backArrow"
-    | "search"
-    | "pokeball"
-    | "bug"
-    | "dark"
-    | "dragon"
-    | "electric"
-    | "fairy"
-    | "fighting"
-    | "fire"
-    | "flying"
-    | "ghost"
-    | "grass"
-    | "ground"
-    | "ice"
-    | "normal"
-    | "poison"
-    | "psychic"
-    | "rock"
-    | "steel"
-    | "water";
-  width: number;
-  height: number;
-  color: string;
-  strokeWidth: number;
+  name: keyof typeof icons;
+  width?: number;
+  height?: number;
+  color?: string;
+  strokeWidth?: number;
 };
 
 export default function Icon({
-  name = "pokeball",
-  width,
-  height,
-  color,
-  strokeWidth,
-}: Partial<IconProps>) {
+  name,
+  width = 24,
+  height = 24,
+  color = "#000",
+  strokeWidth = 2,
+}: IconProps) {
   const IconComponent = icons[name];
+
+  if (!IconComponent) {
+    return null;
+  }
+
   return (
     <IconComponent
-      width={width || 24}
-      height={height || 24}
-      color={color || "#000"}
-      strokeWidth={strokeWidth || 2}
+      width={width}
+      height={height}
+      color={color}
+      strokeWidth={strokeWidth}
     />
   );
 }

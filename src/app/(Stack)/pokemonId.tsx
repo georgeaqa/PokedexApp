@@ -127,11 +127,23 @@ export default function PokemonScreen() {
             type={pokemon.type[0].toString().toLowerCase()}
           />
           <View>
-            <Text className="font-bold text-2xl">Strong Against:</Text>
+            <Text
+              className={`font-bold text-2xl ${getTextColor(
+                pokemon.type[0].toString().toLowerCase()
+              )}`}
+            >
+              Strong Against:
+            </Text>
             <CustomTypeArray typeArray={pokemon.strong_against} />
           </View>
           <View>
-            <Text className="font-bold text-2xl">Weak Against:</Text>
+            <Text
+              className={`font-bold text-2xl ${getTextColor(
+                pokemon.type[0].toString().toLowerCase()
+              )}`}
+            >
+              Weak Against:
+            </Text>
             <CustomTypeArray typeArray={pokemon.weak_against} />
           </View>
         </View>

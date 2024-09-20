@@ -1,30 +1,31 @@
 import { Redirect } from "expo-router";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { pokemonAction } from "@/src/store/actions/pokemon.action";
+import { View, Text } from "react-native";
 
 export default function Index() {
   const dispatch = useDispatch();
-  const [redirect, setRedirect] = useState(false);
-
+  const pokemonsData = useSelector(
+    (state: any) => state.pokemon.filtered_pokemons
+  );
+  const typesData = useSelector((state: any) => state.pokemon.types);
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        await pokemonAction.fetch_pokemons()(dispatch);
-        await pokemonAction.fetch_types()(dispatch);
-      } catch (error) {
-        console.error("Failed to fetch pokemons:", error);
-      } finally {
-        setRedirect(true);
-      }
+      await pokemonAction.fetch_pokemons()(dispatch);
+      await pokemonAction.fetch_types()(dispatch);
     };
 
     fetchData();
   }, [dispatch]);
 
-  if (redirect) {
+  if (pokemonsData.length > 0 && typesData.length > 0) {
     return <Redirect href="/home" />;
   }
 
-  return null;
+  return (
+    <View className="flex-1 items-center justify-center">
+      <Text className="font-bold text-4xl">Loading...</Text>
+    </View>
+  );
 }

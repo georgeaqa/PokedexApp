@@ -125,10 +125,10 @@ export default function HomeScreen() {
               numColumns={3}
             />
             <Pressable
-              className="bg-black p-2 rounded-full active:opacity-20"
+              className="bg-black p-2 rounded-full active:opacity-20 w-full"
               onPress={() => setModalVisible(false)}
             >
-              <Text className="text-white font-extrabold">Close Filter</Text>
+              <Text className="text-white font-extrabold text-center">Close Filter</Text>
             </Pressable>
           </View>
         </View>

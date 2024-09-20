@@ -4,6 +4,7 @@ import Icon from "@/src/assets/icons";
 import { getBgType, getBgPokemon } from "@/src/constants/getColor";
 import { getPokemonImage } from "../services/pokemonsService";
 import { dimensions } from "../constants";
+import CustomTypeArray from "./CustomtypeArray";
 import { Pokemon } from "../types/type";
 import React, { useEffect, useState } from "react";
 
@@ -66,20 +67,7 @@ export default function CustomPokemonCard({
             <Text className="text-white text-2xl font-bold">
               {pokemon.name}
             </Text>
-
-            <View className="flex-row gap-2 items-center">
-              {pokemon.type.map((type: any, index: number) => (
-                <View
-                  key={index}
-                  className={`flex-row gap-1 items-center p-1 rounded-md ${getBgType(
-                    type.toLowerCase()
-                  )}`}
-                >
-                  <Icon name={type.toLowerCase()} color="#fff" width={20} />
-                  <Text className="text-xs text-white">{type}</Text>
-                </View>
-              ))}
-            </View>
+            <CustomTypeArray typeArray={pokemon.type} />
           </Pressable>
         </ImageBackground>
       </View>

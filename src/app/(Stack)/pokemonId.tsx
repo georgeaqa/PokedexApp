@@ -1,6 +1,10 @@
 import { View, Text, Pressable } from "react-native";
 import { Image } from "expo-image";
-import { CustomScreenWrapper, CustomStat } from "@/src/components";
+import {
+  CustomScreenWrapper,
+  CustomStat,
+  CustomTypeArray,
+} from "@/src/components";
 import { router } from "expo-router";
 import { getPokemonImage } from "@/src/services/pokemonsService";
 import {
@@ -35,7 +39,6 @@ export default function PokemonScreen() {
     }
     getPokemonImageUrl();
   }, []);
-
   const navigateToPokemon = (id: number) => {
     dispatch(pokemon_selected(id));
     router.replace(`/pokemonId`);
@@ -86,19 +89,7 @@ export default function PokemonScreen() {
               }}
               contentFit="contain"
             />
-            <View className="flex-row gap-2">
-              {pokemon.type.map((type: any, index: number) => (
-                <View
-                  key={index}
-                  className={`flex-row gap-1 items-center p-1 rounded-md ${getBgType(
-                    type.toLowerCase()
-                  )}`}
-                >
-                  <Icon name={type.toLowerCase()} color="#fff" width={20} />
-                  <Text className="text-xs text-white">{type}</Text>
-                </View>
-              ))}
-            </View>
+            <CustomTypeArray typeArray={pokemon.type} />
           </View>
           <Pressable
             className="bg-black/5 p-1 rounded-full active:opacity-20"
@@ -135,6 +126,14 @@ export default function PokemonScreen() {
             value={pokemon.speed}
             type={pokemon.type[0].toString().toLowerCase()}
           />
+          <View>
+            <Text className="font-bold text-2xl">Strong Against:</Text>
+            <CustomTypeArray typeArray={pokemon.strong_against} />
+          </View>
+          <View>
+            <Text className="font-bold text-2xl">Weak Against:</Text>
+            <CustomTypeArray typeArray={pokemon.weak_against} />
+          </View>
         </View>
       </View>
     </CustomScreenWrapper>

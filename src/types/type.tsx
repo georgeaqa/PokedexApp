@@ -6,6 +6,8 @@ export interface Pokemon {
   attack: number;
   defense: number;
   speed: number;
+  strong_against: string[];
+  weak_against: string[];
 }
 
 export interface PokemonType {

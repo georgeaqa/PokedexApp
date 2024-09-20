@@ -1,28 +1,20 @@
 import { supabase } from "@/src/lib/supabase";
+import { Pokemon } from "../types/type";
 
-export async function getPokemons(type: string | null) {
-  try {
-    const { data, error } = await supabase
-      .from("pokemons")
-      .select("*")
-      .order("id")
-      .contains("type", [type]);
-    if (error) {
-      throw new Error(error.message);
-    }
-    return data;
-  } catch (error: any) {
+export const getPokemons = async (): Promise<Pokemon[]> => {
+  const { data, error } = await supabase
+    .from("pokemons")
+    .select("*")
+    .order("id");
+  if (error) {
     throw new Error(error.message);
   }
-}
+  return data as Pokemon[];
+};
 
-export async function getPokemon(id: number) {
+export async function getTypes() {
   try {
-    const { data, error } = await supabase
-      .from("pokemons")
-      .select("*")
-      .eq("id", id)
-      .single();
+    const { data, error } = await supabase.from("types").select("*");
     if (error) {
       throw new Error(error.message);
     }

@@ -1,76 +1,56 @@
-import {
-  ActivityIndicator,
-  View,
-  Text,
-  TextInput,
-  FlatList,
-  Pressable,
-} from "react-native";
+import { View, Text, TextInput, FlatList, Pressable } from "react-native";
 import {
   CustomScreenWrapper,
   CustomPokemonCard,
   CustomTypeSelected,
 } from "@/src/components";
 import Icon from "@/src/assets/icons";
-import { getPokemons } from "@/src/services/pokemonsService";
-import { getTypes } from "@/src/services/typesService";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
 import { Pokemon, PokemonType } from "@/src/types/type";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import {
+  pokemon_selected,
+  type_selected,
+} from "@/src/store/actions/pokemon.action";
 
 export default function HomeScreen() {
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [searchPokemon, setSearchPokemon] = useState<string>("");
-  const [types, setTypes] = useState<PokemonType[]>([]);
-  const [selectedType, setSelectedType] = useState<string | null>("");
-  const [loading, setLoading] = useState<boolean>(true);
+  const pokemonsData = useSelector(
+    (state: any) => state.pokemon.filtered_pokemons
+  );
+  const typesData = useSelector((state: any) => state.pokemon.types);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    async function getType() {
-      try {
-        const typesData: PokemonType[] = await getTypes();
-        setTypes(typesData);
-      } catch (error: any) {
-        console.log(error);
-      }
-    }
-    getType();
-  }, []);
+  const onPressPokemon = (id: number) => {
+    dispatch(pokemon_selected(id));
+    router.push(`/pokemonId`);
+  };
 
-  useEffect(() => {
-    async function fechtPokemons() {
-      try {
-        setLoading(true);
-        const pokemonsData: Pokemon[] = await getPokemons(selectedType);
-        setPokemons(pokemonsData);
-      } catch (error: any) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fechtPokemons();
-  }, [selectedType]);
+  const onPressType = (id: number) => {
+    dispatch(type_selected(id));
+  };
 
+  const onPressClearFilter = () => {
+    dispatch(type_selected(0));
+    setSearchPokemon("");
+  };
   const renderPokemonItem = ({ item }: { item: Pokemon }) => {
     return (
       <CustomPokemonCard
         pokemon={item}
-        onPress={() => router.push(`/${item.id.toString()}`)}
+        onPress={() => onPressPokemon(item.id)}
       />
     );
   };
 
   const renderTypeItem = ({ item }: { item: PokemonType }) => {
     return (
-      <CustomTypeSelected
-        type={item}
-        onPress={() => setSelectedType(item.name)}
-      />
+      <CustomTypeSelected type={item} onPress={() => onPressType(item.id)} />
     );
   };
 
-  const filterPokemons = pokemons.filter((pokemon: Pokemon) =>
+  const search_pokemon_by_name = pokemonsData.filter((pokemon: Pokemon) =>
     pokemon.name.toLowerCase().includes(searchPokemon.toLowerCase())
   );
 
@@ -83,17 +63,18 @@ export default function HomeScreen() {
           <TextInput
             className="flex-1"
             placeholder="What Pokémon are you looking for?"
+            value={searchPokemon}
             onChangeText={(text: string) => setSearchPokemon(text)}
           />
         </View>
         <Pressable
-          className="active:opacity-20 justify-center items-center w-12 border rounded-xl"
-          onPress={() => setSelectedType(null)}
+          className="active:opacity-20 justify-center items-center border rounded-xl"
+          onPress={() => onPressClearFilter()}
         >
-          <Text>ALL</Text>
+          <Text>Clear Filter</Text>
         </Pressable>
         <FlatList
-          data={types}
+          data={typesData}
           renderItem={renderTypeItem}
           keyExtractor={(item: PokemonType) => item.id.toString()}
           showsHorizontalScrollIndicator={false}
@@ -102,19 +83,16 @@ export default function HomeScreen() {
         />
       </View>
 
-      {loading ? (
-        <ActivityIndicator size="large" className="color-primary" />
-      ) : filterPokemons.length === 0 ? (
+      {search_pokemon_by_name.length === 0 ? (
         <Text className="text-center text-3xl text-black">
           No Pokémon found
         </Text>
       ) : (
         <FlatList
-          data={filterPokemons}
+          data={search_pokemon_by_name}
           renderItem={renderPokemonItem}
           keyExtractor={(item: Pokemon) => item.id.toString()}
           showsVerticalScrollIndicator={false}
-          windowSize={5}
           numColumns={2}
         />
       )}
